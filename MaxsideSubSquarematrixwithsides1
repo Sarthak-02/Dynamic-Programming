@@ -1,0 +1,97 @@
+
+/* Question @ http://www.geeksforgeeks.org/given-matrix-o-x-find-largest-subsquare-surrounded-x/ */
+
+
+public class MaxSubSquareMatrixwithside1 {
+
+	static int min(int a , int b)
+	{
+		if(a>b)
+			return b;
+		else 
+			return a;
+		
+	}
+	public static int maxSide(int[][] m)
+	{
+		int[][] hr = new int[6][6];
+		int[][] vr = new int[6][6];
+		
+		for(int i=0;i<6;i++)
+		{
+			for(int j=0;j<6;j++) {
+				hr[i][j]=0;
+				vr[i][j]=0;
+				
+				
+			}
+		}
+		int i,j;
+	/*	if(m[0][0]==1)
+		{
+			hr[0][0]=1;
+			vr[0][0]=1;
+		} */
+		for(i=0;i<5;i++)
+		{
+			for(j=0;j<5;j++)
+			{
+				if(m[i][j]==1)
+				{
+					hr[i+1][j+1] = hr[i+1][j]+1;
+					vr[i+1][j+1] = vr[i][j+1]+1;
+				}
+				else
+				{
+					hr[i+1][j+1]=0;
+					vr[i+1][j+1]=0;
+				}
+			}
+		}
+		
+		
+		int p=0;
+		int t=0;
+	
+		for(i=5;i>=0;i--)
+		{
+			for(j=5;j>=0;j--)
+			{
+				p = min(hr[i][j], vr[i][j]);
+				while(p>t)
+				{
+						if(hr[i-p+1][j] >= p && vr[i][j-p+1] >=p )
+						{
+							t=p;;
+						}
+					
+					p--;
+				}
+					
+				}
+				
+				
+				
+			
+		}
+		return t;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String args[])
+	{
+		int[][] m = {{0,0,0,0,1},
+					 {1,0,1,1,1},
+					 {1,0,1,0,1},
+					 {1,1,1,1,1},
+					 {0,0,1,1,1}};
+		System.out.println(maxSide(m));
+		
+	}
+}
